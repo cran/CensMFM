@@ -1,6 +1,6 @@
 rMMSN.contour <-
 function(model = NULL, y = NULL, mu=NULL, Sigma=NULL, shape=NULL,nu = NULL ,
-pii=NULL, Zij = NULL, contour = FALSE, hist.Bin = 30, slice=100, col.names = NULL,
+pii=NULL, Zij = NULL, contour = FALSE, hist.Bin = 30, contour.Bin = 10, slice=100, col.names = NULL,
 length.x = c(0.5,0.5),length.y = c(0.5,0.5),family = "SN"){
 
   dens = g = x = x1 = x2 = NULL
@@ -17,9 +17,15 @@ length.x = c(0.5,0.5),length.y = c(0.5,0.5),family = "SN"){
     y <- model$res$yest
     Zij <- model$res$group
     mu <- model$res$mu
-    Sigma <- model$res$Sigma
-    shape <- model$res$shape
+    if(family == "SN"){
+      for(i in 1:length(model$res$Sigma)) model$res$Sigma[[i]] <- model$res$Sigma[[i]]%*%model$res$Sigma[[i]]
+      Sigma <- model$res$Sigma
+      shape <- model$res$shape
+    }else{
+      Sigma <- model$res$Sigma
+      }
     pii <- model$res$pii
+    #nu <- model$res$nu
   }
 
   if(!is.null(col.names) && length(col.names) != ncol(y)) stop("col.names must be the same length than ncol y \n")
@@ -85,7 +91,7 @@ length.x = c(0.5,0.5),length.y = c(0.5,0.5),family = "SN"){
           }
           graphc[[aux.grap2[cont2]]] = ggplot(df, aes(x = x, y = y)) +
             geom_point(aes(shape=factor(g), color=factor(g)),size = 1) +
-            geom_contour(data = d1.SN, aes(x1, x2, z = dens),colour = "gray50")+
+            geom_contour(data = d1.SN, aes(x1, x2, z = dens),colour = "gray50",bins = contour.Bin)+
             commonTheme +
             theme_bw(base_size = 12) +
             coord_cartesian(xlim = c(lim.mim.x, lim.max.x), ylim = c(lim.mim.y, lim.max.y)) +

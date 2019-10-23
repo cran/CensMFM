@@ -8,9 +8,11 @@ Pairwise Scatter Plots and Histograms for Finite Mixture of Multivariate Distrib
 It plots the scatter plots with density contours for different multivariate distributions. Possible options are the Skew-normal (\code{family == "SN"}), Normal (\code{family == "Normal"}) and Student-t (\code{family == "t"}) distribution. Different colors are used by groups. Histograms are shown in the diagonal.
 }
 \usage{
-rMMSN.contour(model = NULL, y = NULL, mu = NULL, Sigma = NULL, shape = NULL,
-nu = NULL, pii = NULL, Zij = NULL, contour = FALSE, hist.Bin = 30, slice = 100,
-col.names = NULL, length.x = c(0.5, 0.5), length.y = c(0.5, 0.5), family = "SN")
+rMMSN.contour(model = NULL, y = NULL, mu = NULL, Sigma = NULL,
+shape = NULL, nu = NULL, pii = NULL, Zij = NULL,
+contour = FALSE, hist.Bin = 30, contour.Bin = 10,
+slice = 100, col.names = NULL, length.x = c(0.5, 0.5),
+length.y = c(0.5, 0.5), family = "SN")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -44,8 +46,12 @@ If \code{contour == TRUE} the density contour will be shown, if \code{contour ==
   \item{hist.Bin}{
 number of bins in the histograms. Default is 30.
 }
+  \item{contour.Bin}{
+creates evenly spaced contours in the range of the data. Default is 10.
+}
   \item{slice}{
-number of slices for the contours.
+desired length of the sequence for the variables grid. This grid is build
+for the contours.
 }
   \item{col.names}{
 names passed to the data matrix \eqn{y} of dimension \eqn{p}.

@@ -362,10 +362,10 @@ fit.EM.MSNC <- function(cc, LI, LS, y, mu=NULL, Sigma = NULL, shape=NULL, nu = N
       aic <- -2*lk + 2*d
       bic <- -2*lk + log(n)*d
       edc <- -2*lk + 0.2*sqrt(n)*d
-      out <- list(mu = mu, Sigma = Sigma, shape = shape, Gamma = Gamma, pii = pii, Zij = Zij, yest = yest, logLik = lk, aic = aic, bic = bic, edc = edc, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken)
+      out <- list(mu = mu, Sigma = Sigma, shape = shape, Gamma = Gamma, pii = pii, Zij = Zij, yest = yest, logLik = lk, aic = aic, bic = bic, edc = edc, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken, family = family)
     }
 
-    if(criteria == FALSE) out <- list(mu = mu, Sigma = Sigma, shape = shape, Gamma = Gamma, pii = pii, Zij = Zij, yest = yest, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken)
+    if(criteria == FALSE) out <- list(mu = mu, Sigma = Sigma, shape = shape, Gamma = Gamma, pii = pii, Zij = Zij, yest = yest, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken, family = family)
 
     for(i in 1:length(out$Sigma)) out$Sigma[[i]] <- sqrtm(out$Sigma[[i]])
 
@@ -524,10 +524,10 @@ fit.EM.MSNC <- function(cc, LI, LS, y, mu=NULL, Sigma = NULL, shape=NULL, nu = N
       aic <- -2*lk + 2*d
       bic <- -2*lk + log(n)*d
       edc <- -2*lk + 0.2*sqrt(n)*d
-      out <- list(mu = mu, Sigma = Sigma, pii = pii, Zij = Zij, yest = yest, logLik = lk, aic = aic, bic = bic, edc = edc, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken)
+      out <- list(mu = mu, Sigma = Sigma, pii = pii, Zij = Zij, yest = yest, logLik = lk, aic = aic, bic = bic, edc = edc, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken, family = family)
     }
 
-    if(criteria == FALSE) out <- list(mu = mu, Sigma = Sigma, pii = pii, Zij = Zij, yest = yest, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken)
+    if(criteria == FALSE) out <- list(mu = mu, Sigma = Sigma, pii = pii, Zij = Zij, yest = yest, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken, family = family)
 
     if(cal.im){
       out$MI = imm.msnc.new(y,out,cc,LI,LS,family,uni.Gama)
@@ -742,10 +742,10 @@ fit.EM.MSNC <- function(cc, LI, LS, y, mu=NULL, Sigma = NULL, shape=NULL, nu = N
       aic <- -2*lk + 2*d
       bic <- -2*lk + log(n)*d
       edc <- -2*lk + 0.2*sqrt(n)*d
-      out <- list(mu = mu, Sigma = Sigma, pii = pii, nu = nu, Zij = Zij, yest = yest, logLik = lk, aic = aic, bic = bic, edc = edc, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken)
+      out <- list(mu = mu, Sigma = Sigma, pii = pii, nu = nu, Zij = Zij, yest = yest, logLik = lk, aic = aic, bic = bic, edc = edc, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken,family = family)
     }
 
-    if(criteria == FALSE) out <- list(mu = mu, Sigma = Sigma, pii = pii, nu = nu, Zij = Zij, yest = yest, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken)
+    if(criteria == FALSE) out <- list(mu = mu, Sigma = Sigma, pii = pii, nu = nu, Zij = Zij, yest = yest, iter = count, n = nrow(y), group = apply(Zij, 1, which.max),time = time.taken,family = family)
 
     if(cal.im){
       out$MI = imm.msnc.new(y,out,cc,LI,LS,family,uni.Gama)

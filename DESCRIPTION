@@ -1,7 +1,7 @@
 Package: CensMFM
 Type: Package
 Title: Finite Mixture of Multivariate Censored/Missing Data
-Version: 1.4
+Version: 1.5
 Date: 2019-10-14
 Authors@R: c(
     person("Francisco H. C.", "de Alencar", email = "hildemardealencar@gmail.com", role = c("aut", "cre")),
@@ -15,11 +15,11 @@ License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
-Packaged: 2019-10-14 18:17:24 UTC; cgala
+Packaged: 2019-10-23 19:40:27 UTC; hildemar
 Author: Francisco H. C. de Alencar [aut, cre],
   Christian E. Galarza [aut],
   Larissa A. Matos [ctb],
   Victor H. Lachos [ctb]
 Maintainer: Francisco H. C. de Alencar <hildemardealencar@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-10-16 11:50:12 UTC
+Date/Publication: 2019-10-23 20:10:15 UTC
