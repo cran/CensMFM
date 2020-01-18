@@ -241,9 +241,13 @@ fit.EM.MSNC <- function(cc, LI, LS, y, mu=NULL, Sigma = NULL, shape=NULL, nu = N
 
               w0.hat   = onlymeanTMD(lower = c(LI1),upper = c(LS1),mu = c(mu[[j]]),Sigma = Gamma[[j]],dist = "normal")
 
-              Ltemp  = as.numeric(pmvnorm(lower = c(LI1),upper = c(LS1),mean = c(mu[[j]]),sigma = Gamma[[j]],algorithm = GenzBretz(maxpts = 25000))[1])
-              LLtemp = pmvESN(lower = c(LI1),upper = c(LS1),mu = as.vector(mu[[j]]),Sigma = Sigma[[j]],lambda = shape[[j]],tau = 0,algorithm = GenzBretz(maxpts = 25000))
-              gamma  = eta*Ltemp/LLtemp
+              #Ltemp  = as.numeric(pmvnorm(lower = c(LI1),upper = c(LS1),mean = c(mu[[j]]),sigma = Gamma[[j]],algorithm = GenzBretz(maxpts = 25000))[1])
+              #LLtemp = pmvESN(lower = c(LI1),upper = c(LS1),mu = as.vector(mu[[j]]),Sigma = Sigma[[j]],lambda = shape[[j]],tau = 0,algorithm = GenzBretz(maxpts = 25000))
+              #gamma  = eta*Ltemp/LLtemp
+
+              Ltemp  = prob_opt(lower = c(LI1),upper = c(LS1),mean = c(mu[[j]]),sigma = Gamma[[j]],uselog2 = TRUE)
+              LLtemp = MomTrunc::pmvSN(lower = c(LI1),upper = c(LS1),mu = as.vector(mu[[j]]),Sigma = Sigma[[j]],lambda = shape[[j]],log2 = TRUE)
+              gamma  = eta*2^(Ltemp - LLtemp)
 
               val       = c(t(shape[[j]])%*%iSSj%*%(y.hat - mu[[j]]))
               gamma.ap  = invmills(val)
@@ -284,9 +288,13 @@ fit.EM.MSNC <- function(cc, LI, LS, y, mu=NULL, Sigma = NULL, shape=NULL, nu = N
 
               #ratio
 
-              Ltemp  = as.numeric(pmvnorm(c(LI1[cc1==1]),c(LS1[cc1==1]),mean = c(muc - mub.cc),sigma = Gamma.cc,algorithm = GenzBretz(maxpts = 25000))[1])
-              LLtemp = pmvESN(lower = LI1[cc1==1],upper = LS1[cc1==1],mu = as.vector(muc),Sigma = Sc,lambda = lambda.co,tau = tau.co,algorithm = GenzBretz(maxpts = 25000))
-              gamma.cc = eta.cc*Ltemp/LLtemp
+              # Ltemp  = as.numeric(pmvnorm(c(LI1[cc1==1]),c(LS1[cc1==1]),mean = c(muc - mub.cc),sigma = Gamma.cc,algorithm = GenzBretz(maxpts = 25000))[1])
+              # LLtemp = pmvESN(lower = LI1[cc1==1],upper = LS1[cc1==1],mu = as.vector(muc),Sigma = Sc,lambda = lambda.co,tau = tau.co,algorithm = GenzBretz(maxpts = 25000))
+              # gamma.cc = eta.cc*Ltemp/LLtemp
+
+              Ltemp  = prob_opt(lower = c(LI1[cc1==1]),upper = c(LS1[cc1==1]),c(muc - mub.cc),sigma = Gamma.cc,uselog2 = TRUE)
+              LLtemp = MomTrunc::pmvESN(lower = LI1[cc1==1],upper = LS1[cc1==1],mu = as.vector(muc),Sigma = Sc,lambda = lambda.co,tau = tau.co,log2 = TRUE)
+              gamma.cc  = eta.cc*2^(Ltemp - LLtemp)
 
               # ratio approximation
 
@@ -620,8 +628,12 @@ fit.EM.MSNC <- function(cc, LI, LS, y, mu=NULL, Sigma = NULL, shape=NULL, nu = N
               SigmaUi  <- Sigmas
               SigmaUiA <- SigmaUi*nu[j]/(nu[j]+2)
               auxupper <- y1-muUi
-              auxU1    <- sadmvt(df=nu[j]+2, as.vector(LI1), as.vector(LS1), as.vector(muUi),SigmaUiA)
-              auxU2    <- sadmvt(df=nu[j], as.vector(LI1), as.vector(LS1), as.vector(muUi), SigmaUi)
+              # auxU1    <- sadmvt(df=nu[j]+2, as.vector(LI1), as.vector(LS1), as.vector(muUi),SigmaUiA)
+              # auxU2    <- sadmvt(df=nu[j], as.vector(LI1), as.vector(LS1), as.vector(muUi), SigmaUi)
+
+              auxU1    <- prob_opt(lower = as.vector(LI1),upper = as.vector(LS1),mean = as.vector(muUi),sigma = SigmaUiA,nu=nu[j]+2)
+              auxU2    <- prob_opt(lower = as.vector(LI1),upper = as.vector(LS1),mean = as.vector(muUi),sigma = SigmaUi,nu=nu[j])
+
               #auxU1    <- pmvt(df=nu[j]+2, lower = as.vector(LI1), upper = as.vector(LS1), delta = as.vector(muUi),sigma = SigmaUiA)
               #auxU2    <- pmvt(df=nu[j], lower = as.vector(LI1), upper = as.vector(LS1), delta = as.vector(muUi), sigma= SigmaUi)
               MoMT     <- meanvarTMD(as.vector(LI1),as.vector(LS1),as.vector(muUi),SigmaUiA,dist = "t",nu = nu[j]+2)
@@ -658,12 +670,16 @@ fit.EM.MSNC <- function(cc, LI, LS, y, mu=NULL, Sigma = NULL, shape=NULL, nu = N
               SigmaUiA <- auxcte1*ScA
               auxupper <- y1[cc1==1]-muUi
 
-              auxU1 <- sadmvt(df=nu1+2, as.vector(LI1[cc1==1]), as.vector(LS1[cc1==1]), as.vector(muUi), SigmaUiA)
-              auxU2 <- sadmvt(df=nu1, as.vector(LI1[cc1==1]), as.vector(LS1[cc1==1]), as.vector(muUi), SigmaUi)
+              # auxU1 <- sadmvt(df=nu1+2, as.vector(LI1[cc1==1]), as.vector(LS1[cc1==1]), as.vector(muUi), SigmaUiA)
+              # auxU2 <- sadmvt(df=nu1, as.vector(LI1[cc1==1]), as.vector(LS1[cc1==1]), as.vector(muUi), SigmaUi)
+
+              auxU1    <- prob_opt(lower = as.vector(LI1[cc1==1]),upper = as.vector(LS1[cc1==1]),mean = as.vector(muUi),sigma = SigmaUiA,nu=nu1+2)
+              auxU2    <- prob_opt(lower = as.vector(LI1[cc1==1]),upper = as.vector(LS1[cc1==1]),mean = as.vector(muUi),sigma = SigmaUi,nu=nu1)
+
               #auxU1    <- pmvt(df=nu1+2, lower = as.vector(LI1[cc1==1]), upper = as.vector(LS1[cc1==1]), delta = as.vector(muUi),sigma = SigmaUiA)
               #auxU2    <- pmvt(df=nu1, lower = as.vector(LI1[cc1==1]), upper = as.vector(LS1[cc1==1]), delta = as.vector(muUi), sigma= SigmaUi)
 
-              MoMT <- meanvarTMD(as.vector(LI1[cc1==1]),as.vector(LS1[cc1==1]),muUi,SigmaUiA,dist = "t",nu = nu1+2)
+              MoMT <- meanvarTMD(lower = as.vector(LI1[cc1==1]),upper = as.vector(LS1[cc1==1]),mu = muUi,Sigma = SigmaUiA,dist = "t",nu = nu1+2)
 
               U0 <- as.numeric(auxU1/auxU2)/auxcte
               U1 <- (U0)*(MoMT$mean)

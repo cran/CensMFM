@@ -77,9 +77,13 @@ imm.msnc.new = function(y,model,cc,LI,LS,family,uni.Gama){
 
           w0.hat   = onlymeanTMD(lower = c(LI1),upper = c(LS1),mu = c(mu[[j]]),Sigma = Gamma[[j]],dist = "normal")
 
-          Ltemp  = as.numeric(pmvnorm(lower = c(LI1),upper = c(LS1),mean = c(mu[[j]]),sigma = Gamma[[j]],algorithm = GenzBretz(maxpts = 25000))[1])
-          LLtemp = pmvESN(lower = c(LI1),upper = c(LS1),mu = as.vector(mu[[j]]),Sigma = Sigma[[j]],lambda = shape[[j]],tau = 0,algorithm = GenzBretz(maxpts = 25000))
-          gamma  = eta*Ltemp/LLtemp
+          # Ltemp  = as.numeric(pmvnorm(lower = c(LI1),upper = c(LS1),mean = c(mu[[j]]),sigma = Gamma[[j]],algorithm = GenzBretz(maxpts = 25000))[1])
+          # LLtemp = pmvESN(lower = c(LI1),upper = c(LS1),mu = as.vector(mu[[j]]),Sigma = Sigma[[j]],lambda = shape[[j]],tau = 0,algorithm = GenzBretz(maxpts = 25000))
+          # gamma  = eta*Ltemp/LLtemp
+
+          Ltemp  = prob_opt(lower = c(LI1),upper = c(LS1),mean = c(mu[[j]]),sigma = Gamma[[j]],uselog2 = TRUE)
+          LLtemp = MomTrunc::pmvSN(lower = c(LI1),upper = c(LS1),mu = as.vector(mu[[j]]),Sigma = Sigma[[j]],lambda = shape[[j]],log2 = TRUE)
+          gamma  = eta*2^(Ltemp - LLtemp)
 
           val       = c(t(shape[[j]])%*%iSSj%*%(y.hat - mu[[j]]))
           gamma.ap  = invmills(val)
@@ -119,9 +123,13 @@ imm.msnc.new = function(y,model,cc,LI,LS,family,uni.Gama){
 
           #ratio
 
-          Ltemp  = as.numeric(pmvnorm(c(LI1[cc1==1]),c(LS1[cc1==1]),mean = c(muc - mub.cc),sigma = Gamma.cc,algorithm = GenzBretz(maxpts = 25000))[1])
-          LLtemp = pmvESN(lower = LI1[cc1==1],upper = LS1[cc1==1],mu = as.vector(muc),Sigma = Sc,lambda = lambda.co,tau = tau.co,algorithm = GenzBretz(maxpts = 25000))
-          gamma.cc = eta.cc*Ltemp/LLtemp
+          # Ltemp  = as.numeric(pmvnorm(c(LI1[cc1==1]),c(LS1[cc1==1]),mean = c(muc - mub.cc),sigma = Gamma.cc,algorithm = GenzBretz(maxpts = 25000))[1])
+          # LLtemp = pmvESN(lower = LI1[cc1==1],upper = LS1[cc1==1],mu = as.vector(muc),Sigma = Sc,lambda = lambda.co,tau = tau.co,algorithm = GenzBretz(maxpts = 25000))
+          # gamma.cc = eta.cc*Ltemp/LLtemp
+
+          Ltemp  = prob_opt(lower = c(LI1[cc1==1]),upper = c(LS1[cc1==1]),c(muc - mub.cc),sigma = Gamma.cc,uselog2 = TRUE)
+          LLtemp = MomTrunc::pmvESN(lower = LI1[cc1==1],upper = LS1[cc1==1],mu = as.vector(muc),Sigma = Sc,lambda = lambda.co,tau = tau.co,log2 = TRUE)
+          gamma.cc  = eta.cc*2^(Ltemp - LLtemp)
 
           # ratio approximation
 

@@ -58,7 +58,11 @@ sqrtm <- function(A)
 #
 invmills = function(x,mu=0,sd=1){
   z = (x-mu)/sd
-  if(z < -37.5){return(-z/sd)}else{return(dnorm(x,mu,sd)/pnorm(x,mu,sd))}
+  if(z < -1e4){
+    return(-z/sd)
+  }else{
+    return(exp(dnorm(x,mu,sd,log = TRUE) - pnorm(q = x,mean = mu,sd = sd,log.p = TRUE)))
+  }
 }
 
 #############################################################################
@@ -371,7 +375,10 @@ dmvTCens<-function(cc, LI, LS, y, mu, Sigma, nu){
 
       if(sum(cc1)==p){
 
-        ver[j]<-sadmvt(df=nu, as.vector(LI1),as.vector(LS1),as.vector(mu),Sigma)
+        #ver[j]<-sadmvt(df=nu, as.vector(LI1),as.vector(LS1),as.vector(mu),Sigma)
+        #ver[j]<-sadmvt(df=nu, as.vector(LI1),as.vector(LS1),as.vector(mu),Sigma)
+
+        ver[j]<-prob_opt(lower = as.vector(LI1),upper = as.vector(LS1),mean = as.vector(mu),sigma = Sigma,nu = nu)
         #ver[j]<-pmvt(df=nu, lower = as.vector(LI1),upper = as.vector(LS1),delta = as.vector(mu),sigma = Sigma,algorithm = GenzBretz(maxpts = 2000*p, abseps = 1e-06, releps = 0))
 
         }
@@ -392,7 +399,7 @@ dmvTCens<-function(cc, LI, LS, y, mu, Sigma, nu){
         #ver[j,]<-dmvt(x = as.vector(y1[cc1==0]),delta = c(mu[cc1==0]),sigma = as.matrix(Sigma[cc1==0,cc1==0]),df=nu,log = FALSE)*
          # pmvt(df=nu1,lower = as.vector(LI1[cc1==1]),upper = as.vector(LS1[cc1==1]),delta = as.vector(muUi),sigma = SigmaUi,algorithm = GenzBretz(maxpts = 2000*p, abseps = 1e-06, releps = 0))
         ver[j,]<-dmvt(x = as.vector(y1[cc1==0]),delta = c(mu[cc1==0]),sigma = as.matrix(Sigma[cc1==0,cc1==0]),df=nu,log = FALSE)*
-          sadmvt(df=nu1,as.vector(LI1[cc1==1]),as.vector(LS1[cc1==1]),as.vector(muUi),SigmaUi)
+          prob_opt(lower = as.vector(LI1[cc1==1]),upper = as.vector(LS1[cc1==1]),mean = as.vector(muUi),sigma = SigmaUi,nu=nu1)
         }
 
     }

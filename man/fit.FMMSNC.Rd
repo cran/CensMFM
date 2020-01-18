@@ -142,20 +142,21 @@ Zij <- test$G
 cc <- test$cc
 y <- test$y
 
-## left censure ##
+## left censoring ##
 LI <-cc
 LS <-cc
 LI[cc==1]<- -Inf
 LS[cc==1]<- y[cc==1]
+
+\donttest{
+#full analysis may take a few seconds more...
 
 test_fit.cc0 = fit.FMMSNC(cc, LI, LS, y, mu=mu,
 Sigma = Sigma, shape=shape, pii = pii, g = 2, get.init = FALSE,
 criteria = TRUE, family = "Normal", error = 0.0001,
 iter.max = 200, uni.Gama = FALSE, cal.im = FALSE)
 
-#full analysis may take a few seconds more...
 
-\donttest{
 test_fit.cc = fit.FMMSNC(cc, LI, LS, y, mu=mu,
 Sigma = Sigma, shape=shape, pii = pii, g = 2, get.init = FALSE,
 criteria = TRUE, family = "SN", error = 0.00001,
