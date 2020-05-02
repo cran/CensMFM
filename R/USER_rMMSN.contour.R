@@ -61,6 +61,17 @@ length.x = c(0.5,0.5),length.y = c(0.5,0.5),family = "SN"){
         if(family=="Normal") d1.SN$dens  <-  mixedMN(y = as.matrix(d1.SN), pii = pii, mu = mu, Sigma = Sigma)
         if(family=="t") d1.SN$dens  <-  mixedMT(y = as.matrix(d1.SN), pii = pii, mu = mu, Sigma = Sigma , nu = nu)
 
+        # mat2 = as.matrix(d1.SN)
+        #
+        # matx1 = aggregate(dens ~ x1, mat2, sum)
+        # matx2 = aggregate(dens ~ x2, mat2, sum)
+
+        # plot(matx1[,1], matx1[,2],type = "l")
+        # plot(matx2[,1], matx2[,2],type = "l")
+        #
+        # dfx1 <- data.frame(x1 = matx1[,1], dens = matx1[,2])
+        # dfx2 <- data.frame(x2 = matx2[,1], dens = matx2[,2])
+
         df <- data.frame(x = y[,i1], y = y[,i2],g = Zij)
 
         if(i1 == i2){
@@ -74,8 +85,9 @@ length.x = c(0.5,0.5),length.y = c(0.5,0.5),family = "SN"){
             commonTheme = list(labs(x="", y=""))}
 
           graphc[[aux.grap1[cont1]]] = ggplot(df.hist, aes(x=x,color = g)) +
-            geom_histogram(fill="gray",alpha=0.5, position="identity", bins = hist.Bin) +
+            geom_histogram(fill="gray",alpha=0.5, position="identity", bins = hist.Bin) + #,aes(y=..density..)
             commonTheme+
+            # geom_line(data = dfx1,aes(x = x1,y = dens),colour = "gray50") +
             theme_bw(base_size = 12)+
             theme(legend.position="none",panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                   panel.background = element_blank()) +
@@ -153,8 +165,8 @@ length.x = c(0.5,0.5),length.y = c(0.5,0.5),family = "SN"){
   return(
   graphcs = grid.arrange(
     grobs = graphc,
-    widths = c(p,p),
-    heights = c(p,p),
+    widths = rep(p,p),
+    heights = rep(p,p),
     layout_matrix = Ma
   )
   )

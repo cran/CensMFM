@@ -436,8 +436,8 @@ if(family=="Normal"){
             SigmaUi  <- Sigmas
             SigmaUiA <- SigmaUi*nu[j]/(nu[j]+2)
             auxupper <- y1-muUi
-            auxU1    <- pmvt(df=nu[j]+2, lower = as.vector(LI1), upper = as.vector(LS1), delta = as.vector(muUi),sigma = SigmaUiA)
-            auxU2    <- pmvt(df=nu[j], lower = as.vector(LI1), upper = as.vector(LS1), delta = as.vector(muUi), sigma= SigmaUi)
+            auxU1    <- pmvt(df=nu[j]+2, lower = as.vector(LI1), upper = as.vector(LS1), delta = as.vector(muUi),sigma = SigmaUiA,type="shitfed")
+            auxU2    <- pmvt(df=nu[j], lower = as.vector(LI1), upper = as.vector(LS1), delta = as.vector(muUi), sigma= SigmaUi,type="shitfed")
             #auxU1    <- sadmvt(df=nu+2, as.vector(LI1), as.vector(LS1), as.vector(muUi),SigmaUiA)
             #auxU2    <- sadmvt(df=nu, as.vector(LI1), as.vector(LS1), as.vector(muUi), SigmaUi)
             #MoMT     <- Mtmvt(muUi,SigmaUiA,nu+2,rep(-Inf,p),y1)
@@ -480,8 +480,8 @@ if(family=="Normal"){
             auxupper <- y1[cc1==1]-muUi
 
 
-            auxU1    <- pmvt(df=nu1+2, lower = as.vector(LI1[cc1==1]), upper = as.vector(LS1[cc1==1]), delta = as.vector(muUi),sigma = SigmaUiA)
-            auxU2    <- pmvt(df=nu1, lower = as.vector(LI1[cc1==1]), upper = as.vector(LS1[cc1==1]), delta = as.vector(muUi), sigma= SigmaUi)
+            auxU1    <- pmvt(df=nu1+2, lower = as.vector(LI1[cc1==1]), upper = as.vector(LS1[cc1==1]), delta = as.vector(muUi),sigma = SigmaUiA,type="shitfed")
+            auxU2    <- pmvt(df=nu1, lower = as.vector(LI1[cc1==1]), upper = as.vector(LS1[cc1==1]), delta = as.vector(muUi), sigma= SigmaUi,type="shitfed")
             #auxU1<-sadmvt(df=nu1+2, as.vector(LI1[cc1==1]), as.vector(LS1[cc1==1]), as.vector(muUi), SigmaUiA)
             #auxU2 <- sadmvt(df=nu1, as.vector(LI1[cc1==1]), as.vector(LS1[cc1==1]), as.vector(muUi), SigmaUi)
             #MoMT <- Mtmvt(muUi,SigmaUiA,nu1+2,rep(-Inf,length(cc1[cc1==1])),y1[cc1==1])

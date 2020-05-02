@@ -2,11 +2,11 @@ export("fit.FMMSNC","rMSN","rMMSN","rMMSN.contour")
 importFrom("stats", "dnorm", "dt", "kmeans", "mahalanobis", "na.omit",
                "pnorm", "pt", "rgamma", "rmultinom", "rnorm", "runif",
                "var")
-importFrom("mvtnorm","rmvnorm","dmvnorm","dmvt","pmvt","pmvnorm","GenzBretz")
+importFrom("mvtnorm","rmvnorm","dmvnorm","dmvt","pmvnorm")
 importFrom("MomTrunc","pmvESN","meanvarTMD","onlymeanTMD","dmvESN","pmvSN")
 #importFrom("moments","skewness")
 #importFrom("mnormt","sadmvt")
-importFrom("tlrmvnmvt","pmvn.genz","pmvt.genz")
+importFrom("tlrmvnmvt","pmvn","pmvt","GenzBretz")
 import("ggplot2")
 #import("devtools")
 #library(gridExtra)
