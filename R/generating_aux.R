@@ -104,7 +104,7 @@ mixedMT <- function(y, pii, mu, Sigma, nu){
 
 ## Graphic function (contour plot) auxiliary function ##
 
-seq.r = function(n,a,r){
+seq_r = function(n,a,r){
   x = c()
   x[1] = a
   for(i in 2:n){

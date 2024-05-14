@@ -17,7 +17,7 @@ length.y = c(0.5, 0.5), family = "SN")
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{model}{
- is an object resultant from the code{\link{fit.FMMSNC}} function.
+ is an object resultant from the \code{\link{fit.FMMSNC}} function.
 }
   \item{y}{
 the response matrix with dimension \eqn{n}x\eqn{p}.

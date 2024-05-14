@@ -11,9 +11,22 @@
 \details{
 
 The DESCRIPTION file:
-\packageDESCRIPTION{CensMFM}
+
 \packageIndices{CensMFM}
-~~ An overview of how to use the package, including the most important functions ~~
+
+  The \pkg{CensMFM} package provides comprehensive tools for fitting and analyzing finite mixture models on censored and/or missing data using several multivariate distributions. This package supports the normal, Student-t, and skew-normal distributions, facilitating point estimation and asymptotic inference through the empirical information matrix. Additionally, it allows for the generation of censored data.
+
+  Key functions include:
+  \itemize{
+    \item \code{\link{fit.FMMSNC}}: Fits finite mixtures of censored and/or missing multivariate distributions using an EM-type algorithm. This function supports skew-normal, normal, and Student-t distributions.
+    \item \code{\link{rMMSN.contour}}: Generates pairwise scatter plots and contour plots for analyzing the relationships within the fitted models.
+    \item \code{\link{rMMSN}}: Provides functionality to generate random realizations from a finite mixture of multivariate distributions, particularly useful for simulation studies involving censored data.
+    \item \code{\link{rMSN}}: Focuses on generating random realizations from multivariate Skew-normal and Normal distributions.
+  }
+
+  This package serves as an extension and complement to the methodologies presented in the paper by Lachos, V. H., Moreno, E. J. L., Chen, K. & Cabral, C. R. B. (2017) <doi:10.1016/j.jmva.2017.05.005>, specifically for the multivariate skew-normal case.
+
+
 }
 \author{
 \packageAuthor{CensMFM}

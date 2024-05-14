@@ -1,8 +1,8 @@
 Package: CensMFM
 Type: Package
 Title: Finite Mixture of Multivariate Censored/Missing Data
-Version: 3.0
-Date: 2023-01-28
+Version: 3.1
+Date: 2024-05-13
 Authors@R: c(
     person("Francisco H. C.", "de Alencar", email = "hildemardealencar@gmail.com", role = c("aut", "cre")),
     person("Christian E.", "Galarza", email = "cgalarza88@gmail.com", role = "aut"),
@@ -15,11 +15,11 @@ Description: It fits finite mixture models for censored or/and missing data usin
 License: GPL (>= 2)
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2023-01-28 18:59:35 UTC; cgala
+Packaged: 2024-05-13 19:59:04 UTC; cgala
 Author: Francisco H. C. de Alencar [aut, cre],
   Christian E. Galarza [aut],
   Larissa A. Matos [ctb],
   Victor H. Lachos [ctb]
 Maintainer: Francisco H. C. de Alencar <hildemardealencar@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-01-30 14:00:10 UTC
+Date/Publication: 2024-05-14 07:33:36 UTC

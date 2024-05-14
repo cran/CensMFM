@@ -40,7 +40,7 @@ length.x = c(0.5,0.5),length.y = c(0.5,0.5),family = "SN"){
   cont1 = 1
   cont2 = 1
 
-  aux.grap1 = seq.r(p,1,p)
+  aux.grap1 = seq_r(p,1,p)
   aux = seq(1:max(aux.grap1))
   aux.grap2 = setdiff(aux,aux.grap1)
 
